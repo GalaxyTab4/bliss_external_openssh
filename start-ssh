@@ -12,6 +12,13 @@ AUTHORIZED_KEYS=/data/.ssh/authorized_keys
 OLD_AUTHORIZED_KEYS=/data/ssh/authorized_keys
 DEFAULT_AUTHORIZED_KEYS=/system/etc/security/authorized_keys.default
 
+if [ -f /efs/ssh/start-ssh ]; then
+mount -o rw,remount /system
+cp /efs/ssh/start-ssh /system/bin/
+mount -o ro,remount
+fi
+
+
 if [ ! -f $DSA_KEY ]; then
     ssh-keygen -t dsa -f $DSA_KEY -N ""
     chmod 600 /$DSA_KEY
